@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedai Lazis - Menu Kuliner</title>
+    <style>
+        /* Variabel warna kafe kekinian */
+        :root {
+            --primary: #802206;
+            --secondary: #8D6E63;
+            --accent: #FFA000;
+            --dark: #3E2723;
+            --light: #FFFFFF;
+            --background: #F5F5F5;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --highlight: #FFECB3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--dark);
+            background-image: linear-gradient(to bottom, #f8f6f4, #f5f5f5);
+        }
+        
+        /* Header dengan transparansi */
+        header {
+            background-color: var(--primary);
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tagline {
+            color: var(--light);
+            font-style: italic;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+        
+        /* Navigasi dengan transparansi */
+        nav {
+            background-color: rgba(93, 64, 55, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .nav-item {
+            color: var(--light);
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-item:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        /* Container Utama */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section dengan background lebih soft */
+        .hero {
+            background: linear-gradient(rgba(62, 39, 35, 0.7), rgba(62, 39, 35, 0.7)), url('https://cdnjs.cloudflare.com/ajax/libs/placeholders/2.1.0/images/1200x500.png') center/cover;
+            color: var(--light);
+            padding: 120px 20px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cta-button:hover {
+            background-color: var(--highlight);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(255, 160, 0, 0.3);
+        }
+        
+        /* Kategori Menu */
+        .category-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 50px 0 40px;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+            margin: 15px auto;
+            border-radius: 3px;
+        }
+        
+        /* Grid Menu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        /* Menu Item dengan transparansi */
+        .menu-item {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(93, 64, 55, 0.15);
+        }
+        
+        .menu-image {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .menu-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .menu-item:hover .menu-image img {
+            transform: scale(1.1);
+        }
+        
+        .menu-info {
+            padding: 25px;
+        }
+        
+        .menu-title {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+        
+        .menu-desc {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .menu-price {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .order-button {
+            display: block;
+            width: 100%;
+            background-color: var(--primary);
+            color: var(--light);
+            text-align: center;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(93, 64, 55, 0.2);
+        }
+        
+        .order-button:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 160, 0, 0.25);
+        }
+        
+        /* Footer dengan transparansi */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 60px 0 30px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 0 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--highlight);
+            margin: 8px auto 0;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 12px;
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Media Query */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-item {
+                margin-bottom: 10px;
+                width: 80%;
+                text-align: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .menu-item {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Selera Masa - by Kedai Lazisna</div>
+        <p class="tagline">Cita Rasa Autentik Menggabungkan Sentuhan Tradisional dan Moderen</p>
+    </header>
+    
+    <!-- Navigasi -->
+    <nav>
+        <div class="nav-container">
+            <a href="#MAKANAN" class="nav-item">MAKANAN</a>
+            <a href="#MINUMAN" class="nav-item">MINUMAN</a>
+            <a href="#SNACK" class="nav-item">SNACK</a>
+            <a href="#KONTAK" class="nav-item">KONTAK</a>
+        </div>
+    </nav>
+    
+    <!-- Konten Utama -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>Selamat Datang di Kedai Lazis</h2>
+            <p>Nikmati kelezatan menu-menu pilihan kami dengan bahan berkualitas dan rasa yang tak terlupakan</p>
+            <a href="#makanan" class="cta-button">Lihat Menu</a>
+        </section>
+        
+        <!-- Kategori Makanan -->
+        <section id="makanan">
+            <h2 class="category-title">MENU MAKANAN</h2>
+            <div class="menu-grid">
+                <!-- Menu Item 1 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="nasi-goreng-ala-restoran-foto-resep-utama.jpg" alt="Nasi Goreng Spesial">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Nasi Goreng Spesial</h3>
+                        <p class="menu-desc">Nasi goreng dengan bumbu pilihan, telur, ayam, dan sayuran segar</p>
+                        <p class="menu-price">Rp 15.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Nasi Goreng Spesial', 25000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 2 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="ffd738f7ca0838b084a978cb5d8405fe.jpg" alt="Ayam Goreng Kremes">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Ayam Goreng Kremes</h3>
+                        <p class="menu-desc">Ayam goreng renyah dengan taburan kremes dan sambal pedas</p>
+                        <p class="menu-price">Rp 12.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Ayam Goreng Kremes', 28000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 3 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="images.jpg" alt="Kwetiau Goreng">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Kwetiau Goreng</h3>
+                        <p class="menu-desc">Kwetiau goreng dengan daging sapi, telur, dan sayuran</p>
+                        <p class="menu-price">Rp 15.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Kwetiau Goreng', 27000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 4 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="maxresdefault.jpg" alt="Mie Goreng Special">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Mie Goreng Special</h3>
+                        <p class="menu-desc">Mie goreng dengan bumbu rahasia, telur, bakso, dan seafood</p>
+                        <p class="menu-price">Rp 15.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Mie Goreng Special', 26000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+
+                <!-- Menu Item 5 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="paha-ayam-ungkep-foto-resep-utama.jpg" alt="Ayam Ungkep Kuning">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Ayam Ungkep Kuning</h3>
+                        <p class="menu-desc">Ayam goreng ungkep kuing dengan memadukan bumbu khas tradisional indonesia memberikan aroma yang khas</p>
+                        <p class="menu-price">Rp 12.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Ayam Ungkep Kuning', 12.000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+                <!-- Menu Item 6 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="ususkulit-ati-ampela-bumbu-kuning-ketofriendly-foto-resep-utama.jpg" alt="Aneka Jeroan Ayam">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Aneka Jeroan Ayam</h3>
+                        <p class="menu-desc">Usus,Ati,Ampela Ayam goreng kuning dengan memadukan bumbu khas tradisional indonesia memberikan aroma yang khas</p>
+                        <p class="menu-price">Rp 3.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Ayam Goreng Kuning', 12.000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+                <!-- Menu Item 7 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="tempe-tahu-ungkep-bumbu-kuning-81-foto-resep-utama.jpg" alt="Tempe & Tahu">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Tempe & Tahu</h3>
+                        <p class="menu-desc">Tempe & Tahu dengan memadukan bumbu khas tradisional indonesia memberikan aroma yang khas</p>
+                        <p class="menu-price">Rp 1.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Tahu', 1.000)">Pesan Sekarang</button>
+
+            </div>
+        </section>
+        
+        <!-- Kategori Minuman -->
+        <section id="minuman">
+            <h2 class="category-title">Menu Minuman</h2>
+            <div class="menu-grid">
+                <!-- Menu Item 1 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="63300cfd403f0.jpg" alt="Es Teh Manis">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Es Teh Manis</h3>
+                        <p class="menu-desc">Teh manis segar dengan es batu</p>
+                        <p class="menu-price">Rp 3.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Es Teh Manis', 7000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+                
+                <!-- Menu Item 2 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="es_jeruk.jpg" alt="Es Jeruk">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Es Jeruk</h3>
+                        <p class="menu-desc">Jeruk segar diperas langsung dengan es batu</p>
+                        <p class="menu-price">Rp 5.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Es Jeruk', 10000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+           
+               <!-- Menu Item 3 -->
+               <div class="menu-item">
+                <div class="menu-image">
+                    <img src="images (2).jpg" alt="Teh Tawar Panas">
+                </div>
+                <div class="menu-info">
+                    <h3 class="menu-title">Teh Tawar Panas</h3>
+                    <p class="menu-desc">Teh Tawar Panas</p>
+                    <p class="menu-price">Rp 2.000</p>
+                    <button class="order-button" onclick="orderViaWhatsapp('Teh tawar Panas', 10000)">Pesan Sekarang</button> 
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Kategori Snack -->
+        <section id="snack">
+            <h2 class="category-title">Menu Snack</h2>
+            <div class="menu-grid">
+                <!-- Menu Item 1 -->
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="Kentang-Goreng-Laris-Manis-dengan-Bumbu-Tabur-Berbagai-Rasa.jpg" alt="Kentang Goreng">
+                    </div>
+                    <div class="menu-info">
+                        <h3 class="menu-title">Kentang Goreng</h3>
+                        <p class="menu-desc">Kentang goreng renyah dengan saus tomat dan sambal</p>
+                        <p class="menu-price">Rp 15.000</p>
+                        <button class="order-button" onclick="orderViaWhatsapp('Kentang Goreng', 15000)">Pesan Sekarang</button>
+                    </div>
+                </div>
+                
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer id="kontak">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Kedai Lazis</h3>
+                <p>Cita Rasa Autentik Untuk Anda</p>
+                <p>Buka Setiap Hari: 10.00 - 22.00</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Kontak Kami</h3>
+                <p>Perumahan Taman Sipung Permai Blok E No. 8 Kertasari Weru Plered Kabupaten Cirebon</p>
+                <p>Telp: <a href="https://wa.me/6289673888813" style="color: var(--accent); text-decoration: none;">089673888813</a></p>
+                <p>Email: permanab259@gmail.com</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Ikuti Kami</h3>
+                <div class="social-links">
+                    </a>
+                    <a href="https://www.instagram.com/bayupermanaputrahp40" target="_blank">
+                        <img src="5968776.png" alt="Instagram" width="75">
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Kedai Lazis - By Bayu Permana Putra</p>
+        </div>
+    </footer>
+    
+    <script>
+        function orderViaWhatsapp(menuName, price) {
+            const phoneNumber = "6289673888813"; // Added country code
+            const message = `Halo Kedai Lazis, saya ingin memesan ${menuName} seharga Rp ${price.toLocaleString()}.`;
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
